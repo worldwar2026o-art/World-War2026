@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>جنگ جهانی ۲۰۲۶</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0A0A0F;--panel:#0F0F1A;--card:#141422;--green:#2D5016;--gl:#6DB33F;--red:#CC2200;--rl:#FF3A1A;--gold:#C8A84B;--gdl:#E8C86B;--txt:#D4D4E8;--dim:#7A7A9A;--bright:#F0F0FF;--brd:#2A2A3A;--brdg:#3A3A5A}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Vazirmatn',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;direction:rtl}
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.07) 2px,rgba(0,0,0,0.07) 4px);pointer-events:none;z-index:9999}
+header{background:linear-gradient(180deg,#000008,var(--bg));border-bottom:1px solid var(--green);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 0 30px rgba(45,80,22,.4)}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:42px;height:42px;background:var(--green);border:2px solid var(--gl);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 0 15px rgba(109,179,63,.4)}
+.logo-title{font-size:17px;font-weight:900;color:var(--gl)}
+.logo-sub{font-size:11px;color:var(--dim)}
+.ticker{background:var(--red);padding:5px 0;overflow:hidden;font-size:12px;font-weight:700;white-space:nowrap}
+.ticker-inner{display:inline-flex;gap:60px;animation:tick 30s linear infinite}
+@keyframes tick{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}
+.page{display:none;min-height:calc(100vh - 90px);padding:20px}
+.page.active{display:block}
+.card{background:var(--card);border:1px solid var(--brd);border-radius:8px;overflow:hidden;margin-bottom:16px}
+.card-header{background:linear-gradient(90deg,var(--green),transparent);padding:10px 14px;font-size:13px;font-weight:700;color:var(--gl);letter-spacing:1px;border-bottom:1px solid var(--brd)}
+.card-body{padding:16px}
+.form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.form-label{font-size:12px;color:var(--dim);font-weight:600}
+input,textarea,select{background:var(--bg);border:1px solid var(--brdg);border-radius:5px;padding:10px 12px;color:var(--bright);font-family:'Vazirmatn',sans-serif;font-size:14px;width:100%;direction:rtl}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--gl);box-shadow:0 0 0 2px rgba(109,179,63,.15)}
+textarea{min-height:100px;resize:vertical}
+select option{background:var(--card)}
+.btn{padding:10px 20px;border-radius:5px;border:none;cursor:pointer;font-family:'Vazirmatn',sans-serif;font-size:14px;font-weight:700;transition:all .2s;display:inline-flex;align-items:center;gap:8px;justify-content:center;width:100%}
+.btn-green{background:var(--green);color:var(--gl);border:1px solid var(--gl)}
+.btn-green:hover{box-shadow:0 0 15px rgba(109,179,63,.35)}
+.btn-red{background:#2A0800;color:var(--rl);border:1px solid var(--red)}
+.btn-gold{background:#2A2000;color:var(--gdl);border:1px solid var(--gold)}
+.btn-gray{background:var(--panel);color:var(--dim);border:1px solid var(--brd)}
+.alert{padding:12px 16px;border-radius:6px;font-size:13px;margin-top:10px;display:none}
+.alert.show{display:block}
+.alert-success{background:rgba(45,80,22,.3);border:1px solid var(--gl);color:var(--gl)}
+.alert-error{background:rgba(204,34,0,.2);border:1px solid var(--red);color:var(--rl)}
+.alert-info{background:rgba(200,168,75,.15);border:1px solid var(--gold);color:var(--gdl)}
+.tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:16px}
+.tab{padding:8px 14px;border-radius:5px;border:1px solid var(--brd);cursor:pointer;font-size:13px;font-weight:600;font-family:'Vazirmatn',sans-serif;color:var(--dim);background:var(--panel);transition:all .2s}
+.tab.active{background:var(--green);border-color:var(--gl);color:var(--gl)}
+.stat-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--brd);font-size:13px}
+.stat-label{color:var(--dim)}
+.stat-val{font-weight:700;color:var(--bright)}
+.green{color:var(--gl)!important}
+.red{color:var(--rl)!important}
+.gold{color:var(--gdl)!important}
+.badge{display:inline-block;padding:2px 8px;border-radius:3px;font-size:11px;font-weight:700}
+.badge-pending{background:#2A2000;color:var(--gdl);border:1px solid var(--gold)}
+.badge-approved{background:rgba(45,80,22,.5);color:var(--gl);border:1px solid var(--gl)}
+.badge-rejected{background:rgba(204,34,0,.2);color:var(--rl);border:1px solid var(--red)}
+.country-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.country-card{background:var(--bg);border:1px solid var(--brd);border-radius:6px;padding:12px;cursor:pointer;transition:all .2s;position:relative}
+.country-card:hover{border-color:var(--gl)}
+.country-card.taken{border-color:var(--red);opacity:.6;cursor:not-allowed}
+.country-card.mine{border-color:var(--gl);background:rgba(45,80,22,.2)}
+.country-flag{font-size:26px;margin-bottom:4px}
+.country-name{font-size:13px;font-weight:700;color:var(--bright)}
+.country-region{font-size:11px;color:var(--dim)}
+.taken-badge{position:absolute;top:6px;left:6px;background:#440800;color:var(--rl);font-size:10px;padding:2px 6px;border-radius:3px;font-weight:700}
+.mine-badge{position:absolute;top:6px;left:6px;background:var(--green);color:var(--gl);font-size:10px;padding:2px 6px;border-radius:3px;font-weight:700}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:1000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.modal-overlay.show{display:flex}
+.modal{background:var(--card);border:1px solid var(--gl);border-radius:10px;padding:24px;max-width:440px;width:92%;position:relative}
+.modal-title{font-size:17px;font-weight:900;color:var(--bright);margin-bottom:16px}
+.modal-close{position:absolute;top:14px;left:14px;background:transparent;border:none;color:var(--dim);font-size:20px;cursor:pointer}
+.item-row{background:var(--bg);border:1px solid var(--brd);border-radius:6px;padding:12px;margin-bottom:8px}
+.item-meta{font-size:11px;color:var(--dim);margin-bottom:4px}
+.item-title{font-size:14px;font-weight:700;color:var(--bright);margin-bottom:4px}
+.item-content{font-size:13px;color:var(--txt);line-height:1.6}
+.notif-stack{position:fixed;top:90px;left:16px;z-index:500;display:flex;flex-direction:column;gap:8px;max-width:280px}
+.notif{padding:10px 14px;border-radius:6px;font-size:13px;animation:slideIn .3s ease}
+@keyframes slideIn{from{transform:translateX(-110%);opacity:0}to{transform:translateX(0);opacity:1}}
+.notif-success{background:rgba(45,80,22,.95);border:1px solid var(--gl);color:var(--gl)}
+.notif-error{background:rgba(100,0,0,.95);border:1px solid var(--red);color:var(--rl)}
+.notif-info{background:rgba(30,20,0,.95);border:1px solid var(--gold);color:var(--gdl)}
+.upload-area{border:2px dashed var(--brdg);border-radius:8px;padding:24px;text-align:center;cursor:pointer;transition:all .2s;background:var(--bg);position:relative;margin-bottom:10px}
+.upload-area:hover{border-color:var(--gl)}
+.upload-area input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%}
+#preview-img{max-width:100%;max-height:180px;border-radius:6px;margin-top:8px;display:none;border:1px solid var(--brd)}
+.admin-table{width:100%;border-collapse:collapse;font-size:12px}
+.admin-table th{background:var(--green);color:var(--gl);padding:8px;text-align:right;font-weight:700}
+.admin-table td{padding:8px;border-bottom:1px solid var(--brd);color:var(--txt);vertical-align:top}
+.admin-table tr:hover td{background:rgba(45,80,22,.1)}
+.divider{border:none;border-top:1px solid var(--brd);margin:12px 0}
+@media(max-width:500px){.country-grid{grid-template-columns:1fr}}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--brdg);border-radius:3px}
+</style>
+</head>
+<body>
+<div class="notif-stack" id="notifStack"></div>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">⚔️</div>
+    <div>
+      <div class="logo-title">جنگ جهانی ۲۰۲۶</div>
+      <div class="logo-sub">بازی متنی استراتژیک | <a href="https://rubika.ir/Chanell_123" target="_blank" style="color:var(--gl)">@Chanell_123</a></div>
+    </div>
+  </div>
+  <button class="btn btn-gray" style="width:auto;padding:6px 12px;font-size:12px" onclick="showPage('login')">🔐 ورود</button>
+</header>
+
+<div class="ticker"><div class="ticker-inner"><span>⚔️ جنگ جهانی ۲۰۲۶ | بازی متنی استراتژیک روبیکا | برای ورود کد اختصاصی خود را وارد کنید | @Chanell_123</span><span>⚔️ جنگ جهانی ۲۰۲۶ | بازی متنی استراتژیک روبیکا | برای ورود کد اختصاصی خود را وارد کنید | @Chanell_123</span></div></div>
+
+<!-- LOGIN PAGE -->
+<div id="page-login" class="page active">
+  <div style="max-width:400px;margin:40px auto">
+    <div class="card">
+      <div class="card-header">🔐 ورود به بازی</div>
+      <div class="card-body">
+        <div class="form-group">
+          <label class="form-label">کد اختصاصی بازیکن</label>
+          <input type="text" id="login-code" placeholder="کد خود را وارد کنید..." />
+        </div>
+        <button class="btn btn-green" onclick="loginPlayer()">🎮 ورود به بازی</button>
+        <div class="alert" id="login-alert"></div>
+        <hr class="divider">
+        <div style="font-size:12px;color:var(--dim);text-align:center">برای دریافت کد اختصاصی با مدیر کانال در تماس باشید</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">🛡️ پنل مدیریت</div>
+      <div class="card-body">
+        <div class="form-group">
+          <label class="form-label">رمز مدیر</label>
+          <input type="password" id="admin-pass" placeholder="رمز عبور..." />
+        </div>
+        <button class="btn btn-gold" onclick="loginAdmin()">👑 ورود مدیر</button>
+        <div class="alert" id="admin-alert"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PLAYER PAGE -->
+<div id="page-player" class="page">
+  <div style="max-width:700px;margin:0 auto">
+    <div class="card" style="background:rgba(45,80,22,.15);border-color:var(--gl)">
+      <div class="card-body" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+        <div>
+          <div style="font-size:13px;color:var(--dim)">خوش آمدی،</div>
+          <div style="font-size:18px;font-weight:900;color:var(--gl)" id="player-country-display">در حال بارگذاری...</div>
+        </div>
+        <button class="btn btn-gray" style="width:auto;padding:6px 12px;font-size:12px" onclick="logout()">خروج</button>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('country')">🌍 انتخاب کشور</button>
+      <button class="tab" onclick="showTab('declaration')">📜 بیانیه</button>
+      <button class="tab" onclick="showTab('war')">⚔️ جنگ</button>
+      <button class="tab" onclick="showTab('my-country')">🏴 کشور من</button>
+    </div>
+
+    <!-- COUNTRY TAB -->
+    <div id="tab-country" class="tab-content">
+      <div class="card">
+        <div class="card-header">🌍 انتخاب کشور</div>
+        <div class="card-body">
+          <div id="has-country-msg" class="alert alert-info" style="margin-bottom:12px">شما قبلاً کشور انتخاب کرده‌اید. برای تغییر با مدیر تماس بگیرید.</div>
+          <input type="text" placeholder="🔍 جستجو..." oninput="filterCountries(this.value)" style="margin-bottom:12px" />
+          <div class="country-grid" id="countryGrid"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DECLARATION TAB -->
+    <div id="tab-declaration" class="tab-content" style="display:none">
+      <div class="card">
+        <div class="card-header">📜 ارسال بیانیه رسمی</div>
+        <div class="card-body">
+          <div id="no-country-decl" class="alert alert-error show">ابتدا باید کشور انتخاب کنید!</div>
+          <div id="decl-form" style="display:none">
+            <div class="form-group">
+              <label class="form-label">نام رهبر / رئیس جمهور</label>
+              <input type="text" id="decl-leader" placeholder="نام رهبر کشور شما" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">موضوع بیانیه</label>
+              <select id="decl-type">
+                <option value="">انتخاب کنید...</option>
+                <option>⚔️ اعلام جنگ</option>
+                <option>🕊️ اعلام صلح</option>
+                <option>🤝 پیمان نظامی</option>
+                <option>🚫 تحریم اقتصادی</option>
+                <option>🏳️ درخواست آتش‌بس</option>
+                <option>📢 اعلام بسیج عمومی</option>
+                <option>📋 سایر</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">عکس رئیس جمهور <span class="red">*</span></label>
+              <div class="upload-area">
+                <input type="file" accept="image/*" id="decl-photo" onchange="previewPhoto(event)" />
+                <div id="upload-placeholder">📸<br><small style="color:var(--dim)">عکس رسمی رئیس جمهور را آپلود کنید</small></div>
+                <img id="preview-img" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">متن بیانیه</label>
+              <textarea id="decl-content" placeholder="متن کامل بیانیه رسمی..."></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">امضا</label>
+              <input type="text" id="decl-sign" placeholder="امضای رسمی" />
+            </div>
+            <button class="btn btn-green" onclick="submitDeclaration()">📤 ارسال بیانیه</button>
+            <div class="alert" id="decl-alert"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WAR TAB -->
+    <div id="tab-war" class="tab-content" style="display:none">
+      <div class="card">
+        <div class="card-header">⚔️ سناریوی جنگی / دفاعی</div>
+        <div class="card-body">
+          <div id="no-country-war" class="alert alert-error show">ابتدا باید کشور انتخاب کنید!</div>
+          <div id="war-form" style="display:none">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+              <button class="btn btn-red" id="mode-attack" onclick="setWarMode('attack')" style="padding:12px">⚔️ حمله</button>
+              <button class="btn btn-green" id="mode-defense" onclick="setWarMode('defense')" style="padding:12px;opacity:.5">🛡️ دفاع</button>
+            </div>
+            <div class="form-group">
+              <label class="form-label">کشور هدف / مهاجم</label>
+              <input type="text" id="war-target" placeholder="نام کشور هدف یا مهاجم" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">منطقه عملیاتی</label>
+              <select id="war-zone">
+                <option value="">انتخاب منطقه...</option>
+                <option>اروپای شمالی</option>
+                <option>خاورمیانه</option>
+                <option>آسیای شرقی</option>
+                <option>آفریقای شمالی</option>
+                <option>آمریکای جنوبی</option>
+                <option>اقیانوسیه</option>
+                <option>سایر</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">تعداد نیرو</label>
+              <input type="number" id="war-troops" placeholder="۰" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">تجهیزات</label>
+              <input type="text" id="war-weapons" placeholder="مثال: ۱۰ تانک، ۵ جنگنده..." />
+            </div>
+            <div class="form-group">
+              <label class="form-label">شرح سناریو</label>
+              <textarea id="war-scenario" placeholder="توضیح کامل سناریو..."></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">سطح اضطرار</label>
+              <select id="war-urgency">
+                <option>🟢 عادی</option>
+                <option>🟡 فوری</option>
+                <option>🔴 بحرانی</option>
+              </select>
+            </div>
+            <button class="btn btn-red" onclick="submitWar()">🚨 ارسال سناریو</button>
+            <div class="alert" id="war-alert"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MY COUNTRY TAB -->
+    <div id="tab-my-country" class="tab-content" style="display:none">
+      <div id="my-country-info"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN PAGE -->
+<div id="page-admin" class="page">
+  <div style="max-width:800px;margin:0 auto">
+    <div class="card" style="background:rgba(200,168,75,.1);border-color:var(--gold)">
+      <div class="card-body" style="display:flex;justify-content:space-between;align-items:center">
+        <div style="font-size:18px;font-weight:900;color:var(--gdl)">👑 پنل مدیریت</div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-gold" style="width:auto;padding:6px 12px;font-size:12px" onclick="loadAdminData()">🔄 بروزرسانی</button>
+          <button class="btn btn-gray" style="width:auto;padding:6px 12px;font-size:12px" onclick="logout()">خروج</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" onclick="showAdminTab('players')">👥 بازیکنان</button>
+      <button class="tab" onclick="showAdminTab('declarations')">📜 بیانیه‌ها</button>
+      <button class="tab" onclick="showAdminTab('wars')">⚔️ جنگ‌ها</button>
+      <button class="tab" onclick="showAdminTab('add-player')">➕ کد جدید</button>
+    </div>
+
+    <!-- PLAYERS -->
+    <div id="admin-tab-players">
+      <div class="card">
+        <div class="card-header">👥 بازیکنان</div>
+        <div class="card-body" style="overflow-x:auto">
+          <table class="admin-table" id="players-table">
+            <thead><tr><th>کد</th><th>کشور</th><th>تاریخ عضویت</th><th>عملیات</th></tr></thead>
+            <tbody id="players-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- DECLARATIONS -->
+    <div id="admin-tab-declarations" style="display:none">
+      <div class="card">
+        <div class="card-header">📜 بیانیه‌های دریافتی</div>
+        <div class="card-body" id="declarations-list"></div>
+      </div>
+    </div>
+
+    <!-- WARS -->
+    <div id="admin-tab-wars" style="display:none">
+      <div class="card">
+        <div class="card-header">⚔️ سناریوهای جنگی</div>
+        <div class="card-body" id="wars-list"></div>
+      </div>
+    </div>
+
+    <!-- ADD PLAYER -->
+    <div id="admin-tab-add-player" style="display:none">
+      <div class="card">
+        <div class="card-header">➕ اضافه کردن بازیکن جدید</div>
+        <div class="card-body">
+          <div class="form-group">
+            <label class="form-label">کد اختصاصی بازیکن</label>
+            <input type="text" id="new-player-code" placeholder="مثال: PLAYER_IRAN_001" />
+          </div>
+          <button class="btn btn-green" onclick="addPlayer()">➕ اضافه کردن</button>
+          <div class="alert" id="add-player-alert"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COUNTRY MODAL -->
+<div class="modal-overlay" id="countryModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('countryModal')">✕</button>
+    <div class="modal-title" id="modal-title">—</div>
+    <div id="modal-content"></div>
+    <div style="display:flex;gap:8px;margin-top:16px">
+      <button class="btn btn-green" onclick="claimCountry()" id="claim-btn">🏴 انتخاب این کشور</button>
+      <button class="btn btn-gray" onclick="closeModal('countryModal')">لغو</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SB_URL = 'https://newlsjvwxqovaqcnpyyx.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ld2xzanZ3eHFvdmFxY25weXl4Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4MTUxMzcxNCwiZXhwIjoyMDk3MDg5NzE0fQ.uMX4Lz3UwTXpJwl0EmCPNUQB-ZZaKc-5FoMlXdpZ7sc';
+const ADMIN_PASS = 'm.1389.2009';
+
+const COUNTRIES = [
+  {id:'us',name:'ایالات متحده',flag:'🇺🇸',region:'آمریکای شمالی',military:'۱٬۳۸۶٬۰۰۰ نیرو | ۶۶۱۲ تانک | ۱۸۴۰ جنگنده',economy:'GDP: ۲۵ تریلیون دلار',special:'ناوهواپیمابر × ۱۱ | هسته‌ای: ۵۵۵۰'},
+  {id:'ru',name:'روسیه',flag:'🇷🇺',region:'اوراسیا',military:'۱٬۰۰۰٬۰۰۰ نیرو | ۱۲۰۰۰ تانک | ۱۵۰۰ جنگنده',economy:'GDP: ۱.۸ تریلیون دلار',special:'S-400/S-500 | هسته‌ای: ۶۲۵۷'},
+  {id:'cn',name:'چین',flag:'🇨🇳',region:'آسیای شرقی',military:'۲٬۰۰۰٬۰۰۰ نیرو | ۵۸۰۰ تانک | ۱۷۰۰ جنگنده',economy:'GDP: ۱۸ تریلیون دلار',special:'ناوهواپیمابر × ۲ | هسته‌ای: ۳۵۰'},
+  {id:'de',name:'آلمان',flag:'🇩🇪',region:'اروپای مرکزی',military:'۱۸۳٬۰۰۰ نیرو | ۳۲۸ تانک Leopard | ۱۳۰ جنگنده',economy:'GDP: ۴.۵ تریلیون دلار',special:'Leopard 2A8 | IRIS-T SLM'},
+  {id:'fr',name:'فرانسه',flag:'🇫🇷',region:'اروپای غربی',military:'۲۰۳٬۰۰۰ نیرو | ۲۲۲ تانک Leclerc | ۲۳۴ Rafale',economy:'GDP: ۲.۹ تریلیون دلار',special:'ناوهواپیمابر De Gaulle | هسته‌ای: ۲۹۰'},
+  {id:'uk',name:'بریتانیا',flag:'🇬🇧',region:'اروپای شمالی',military:'۱۴۸٬۰۰۰ نیرو | ۲۲۷ تانک Challenger | ۱۳۷ جنگنده',economy:'GDP: ۳.۱ تریلیون دلار',special:'ناوهواپیمابر Queen Elizabeth | هسته‌ای: ۲۲۵'},
+  {id:'ir',name:'ایران',flag:'🇮🇷',region:'خاورمیانه',military:'۶۱۰٬۰۰۰ نیرو | ۲۰۰۰ تانک | ۳۳۴ جنگنده',economy:'GDP: ۳۶۷ میلیارد دلار | نفت: ۳.۸m bpd',special:'موشک Fattah | پهپاد Shahed-136'},
+  {id:'jp',name:'ژاپن',flag:'🇯🇵',region:'آسیای شرقی',military:'۲۴۷٬۰۰۰ نیرو | ۶۱۰ تانک | ۴۱۰ F-35',economy:'GDP: ۴.۲ تریلیون دلار',special:'SM-3 | F-35B STOVL'},
+  {id:'sa',name:'عربستان',flag:'🇸🇦',region:'خاورمیانه',military:'۲۵۷٬۰۰۰ نیرو | ۱۱۴۲ تانک M1A2 | ۲۶۰ F-15',economy:'GDP: ۱.۰۶ تریلیون | نفت: ۱۱.۵m bpd',special:'Patriot PAC-3 | Typhoon'},
+  {id:'in',name:'هند',flag:'🇮🇳',region:'جنوب آسیا',military:'۱٬۴۵۰٬۰۰۰ نیرو | ۴۰۰۰ تانک | ۵۴۰ جنگنده',economy:'GDP: ۳.۷ تریلیون دلار',special:'Agni-V ICBM | هسته‌ای: ۱۶۴'},
+  {id:'tr',name:'ترکیه',flag:'🇹🇷',region:'اوراسیا',military:'۳۵۵٬۰۰۰ نیرو | ۲۵۳۲ تانک | ۲۴۵ F-16',economy:'GDP: ۱.۱ تریلیون دلار',special:'Bayraktar TB2 | SOM-B1'},
+  {id:'br',name:'برزیل',flag:'🇧🇷',region:'آمریکای جنوبی',military:'۳۶۵٬۰۰۰ نیرو | ۵۰۶ تانک | ۱۸۰ Gripen',economy:'GDP: ۲.۱ تریلیون دلار',special:'زیردریایی Riachuelo'},
+  {id:'pk',name:'پاکستان',flag:'🇵🇰',region:'جنوب آسیا',military:'۶۵۴٬۰۰۰ نیرو | ۲۶۸۰ تانک | ۴۲۵ جنگنده',economy:'GDP: ۳۷۶ میلیارد دلار',special:'هسته‌ای: ۱۶۰ | موشک Shaheen'},
+  {id:'il',name:'اسرائیل',flag:'🇮🇱',region:'خاورمیانه',military:'۱۷۰٬۰۰۰ نیرو | ۲۲۰۰ تانک Merkava | ۳۴۵ F-35',economy:'GDP: ۵۲۵ میلیارد دلار',special:'Iron Dome | Arrow-3 | هسته‌ای'},
+  {id:'kr',name:'کره جنوبی',flag:'🇰🇷',region:'آسیای شرقی',military:'۵۹۹٬۰۰۰ نیرو | ۲۶۵۰ تانک | ۶۴۰ جنگنده',economy:'GDP: ۱.۷ تریلیون دلار',special:'K2 Black Panther | F-35A'},
+  {id:'ng',name:'نیجریه',flag:'🇳🇬',region:'آفریقا',military:'۲۲۳٬۰۰۰ نیرو | ۳۳۰ تانک | ۸۲ جنگنده',economy:'GDP: ۴۴۷ میلیارد | نفت: ۱.۸m bpd',special:'بزرگترین ارتش آفریقا'},
+];
+
+let currentPlayer = null;
+let currentPlayerData = null;
+let selectedCountryForClaim = null;
+let takenCountries = {};
+let warMode = 'attack';
+
+// ===== API =====
+async function sbGet(table, filter=''){
+  const r = await fetch(`${SB_URL}/rest/v1/${table}?${filter}`,{headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}});
+  return r.json();
+}
+async function sbPost(table, data){
+  const r = await fetch(`${SB_URL}/rest/v1/${table}`,{method:'POST',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=representation'},body:JSON.stringify(data)});
+  return r.json();
+}
+async function sbPatch(table, filter, data){
+  const r = await fetch(`${SB_URL}/rest/v1/${table}?${filter}`,{method:'PATCH',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=representation'},body:JSON.stringify(data)});
+  return r.json();
+}
+async function sbDelete(table, filter){
+  const r = await fetch(`${SB_URL}/rest/v1/${table}?${filter}`,{method:'DELETE',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}});
+  return r.ok;
+}
+
+// ===== AUTH =====
+async function loginPlayer(){
+  const code = document.getElementById('login-code').value.trim();
+  if(!code) return showAlert('login-alert','error','کد را وارد کنید');
+  showAlert('login-alert','info','در حال بررسی...');
+  const data = await sbGet('players',`code=eq.${encodeURIComponent(code)}`);
+  if(!data||data.length===0) return showAlert('login-alert','error','❌ کد نامعتبر است');
+  currentPlayer = code;
+  currentPlayerData = data[0];
+  localStorage.setItem('war_code', code);
+  await loadPlayerPage();
+  showPage('player');
+}
+
+async function loginAdmin(){
+  const pass = document.getElementById('admin-pass').value;
+  if(pass!==ADMIN_PASS) return showAlert('admin-alert','error','❌ رمز اشتباه است');
+  currentPlayer = 'ADMIN';
+  localStorage.setItem('war_code','ADMIN');
+  await loadAdminData();
+  showPage('admin');
+}
+
+function logout(){
+  currentPlayer=null;
+  currentPlayerData=null;
+  localStorage.removeItem('war_code');
+  showPage('login');
+}
+
+// ===== PLAYER PAGE =====
+async function loadPlayerPage(){
+  await loadTakenCountries();
+  const p = currentPlayerData;
+  if(p.country_name){
+    document.getElementById('player-country-display').textContent = (p.country_flag||'')+'  '+p.country_name;
+    document.getElementById('has-country-msg').style.display='block';
+    document.getElementById('no-country-decl').style.display='none';
+    document.getElementById('decl-form').style.display='block';
+    document.getElementById('no-country-war').style.display='none';
+    document.getElementById('war-form').style.display='block';
+    loadMyCountry();
+  } else {
+    document.getElementById('player-country-display').textContent = 'هنوز کشوری انتخاب نشده';
+    document.getElementById('has-country-msg').style.display='none';
+  }
+  renderCountries(COUNTRIES);
+}
+
+async function loadTakenCountries(){
+  const data = await sbGet('players','country_id=not.is.null');
+  takenCountries = {};
+  if(data) data.forEach(p=>{ takenCountries[p.country_id] = p.code; });
+}
+
+function renderCountries(list){
+  const grid = document.getElementById('countryGrid');
+  grid.innerHTML = list.map(c=>{
+    const taken = takenCountries[c.id];
+    const isMe = taken === currentPlayer;
+    const cls = isMe?'mine':taken?'taken':'';
+    return `<div class="country-card ${cls}" onclick="openCountry('${c.id}')">
+      ${isMe?'<span class="mine-badge">کشور شما</span>':taken?'<span class="taken-badge">اشغال شده</span>':''}
+      <div class="country-flag">${c.flag}</div>
+      <div class="country-name">${c.name}</div>
+      <div class="country-region">${c.region}</div>
+    </div>`;
+  }).join('');
+}
+
+function filterCountries(q){
+  renderCountries(COUNTRIES.filter(c=>c.name.includes(q)||c.region.includes(q)));
+}
+
+function openCountry(id){
+  const c = COUNTRIES.find(x=>x.id===id);
+  if(!c) return;
+  selectedCountryForClaim = id;
+  const taken = takenCountries[id];
+  const isMe = taken === currentPlayer;
+  document.getElementById('modal-title').textContent = c.flag+' '+c.name;
+  document.getElementById('modal-content').innerHTML = `
+    <div style="font-size:12px;color:var(--dim);margin-bottom:10px">${c.region}</div>
+    <div class="stat-row"><span class="stat-label">⚔️ نظامی</span><span class="stat-val" style="font-size:12px">${c.military}</span></div>
+    <div class="stat-row"><span class="stat-label">💰 اقتصاد</span><span class="stat-val" style="font-size:12px">${c.economy}</span></div>
+    <div class="stat-row"><span class="stat-label">🚀 ویژه</span><span class="stat-val" style="font-size:12px">${c.special}</span></div>
+    ${taken&&!isMe?'<div class="alert alert-error show" style="margin-top:10px">این کشور توسط بازیکن دیگری انتخاب شده است</div>':''}
+  `;
+  const claimBtn = document.getElementById('claim-btn');
+  if(taken&&!isMe){ claimBtn.style.display='none'; }
+  else if(isMe){ claimBtn.textContent='✅ کشور شماست'; claimBtn.style.display='flex'; claimBtn.disabled=true; }
+  else { claimBtn.textContent='🏴 انتخاب این کشور'; claimBtn.style.display='flex'; claimBtn.disabled=false; }
+  document.getElementById('countryModal').classList.add('show');
+}
+
+async function claimCountry(){
+  if(!selectedCountryForClaim) return;
+  if(currentPlayerData.country_id){ showNotif('شما قبلاً کشور انتخاب کرده‌اید','error'); return; }
+  const c = COUNTRIES.find(x=>x.id===selectedCountryForClaim);
+  const res = await sbPatch('players',`code=eq.${encodeURIComponent(currentPlayer)}`,{country_id:c.id, country_name:c.name, country_flag:c.flag});
+  if(res&&res.length>0){
+    currentPlayerData = res[0];
+    closeModal('countryModal');
+    await loadPlayerPage();
+    showNotif(`🏴 ${c.flag} ${c.name} انتخاب شد!`,'success');
+  } else {
+    showNotif('خطا در ثبت کشور','error');
+  }
+}
+
+function loadMyCountry(){
+  const p = currentPlayerData;
+  if(!p.country_name){ document.getElementById('my-country-info').innerHTML='<div class="alert alert-error show">کشوری انتخاب نشده</div>'; return; }
+  const c = COUNTRIES.find(x=>x.id===p.country_id)||{};
+  document.getElementById('my-country-info').innerHTML = `
+    <div class="card">
+      <div class="card-header">${p.country_flag} ${p.country_name}</div>
+      <div class="card-body">
+        <div class="stat-row"><span class="stat-label">⚔️ نیروی نظامی</span><span class="stat-val">${c.military||'—'}</span></div>
+        <div class="stat-row"><span class="stat-label">💰 اقتصاد</span><span class="stat-val">${c.economy||'—'}</span></div>
+        <div class="stat-row"><span class="stat-label">🚀 تجهیزات ویژه</span><span class="stat-val">${c.special||'—'}</span></div>
+        <div class="stat-row"><span class="stat-label">🌍 منطقه</span><span class="stat-val">${c.region||'—'}</span></div>
+      </div>
+    </div>
+  `;
+}
+
+// ===== DECLARATION =====
+function previewPhoto(e){
+  const file=e.target.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=ev=>{ const img=document.getElementById('preview-img'); img.src=ev.target.result; img.style.display='block'; document.getElementById('upload-placeholder').style.display='none'; };
+  reader.readAsDataURL(file);
+}
+
+async function submitDeclaration(){
+  if(!currentPlayerData.country_id) return showAlert('decl-alert','error','ابتدا کشور انتخاب کنید');
+  const leader=document.getElementById('decl-leader').value.trim();
+  const type=document.getElementById('decl-type').value;
+  const content=document.getElementById('decl-content').value.trim();
+  const sign=document.getElementById('decl-sign').value.trim();
+  const photo=document.getElementById('decl-photo').files[0];
+  if(!leader||!type||!content) return showAlert('decl-alert','error','لطفاً همه فیلدها را پر کنید');
+  if(!photo) return showAlert('decl-alert','error','عکس رئیس جمهور اجباری است');
+  showAlert('decl-alert','info','در حال ارسال...');
+  const res = await sbPost('declarations',{
+    player_code: currentPlayer,
+    country_name: currentPlayerData.country_name,
+    country_flag: currentPlayerData.country_flag,
+    leader, type, content, signature: sign, status:'pending'
+  });
+  if(res&&res.length>0){
+    showAlert('decl-alert','success','✅ بیانیه با موفقیت ارسال شد و در انتظار تأیید مدیر است');
+    showNotif('📜 بیانیه ارسال شد','success');
+  } else {
+    showAlert('decl-alert','error','❌ خطا در ارسال');
+  }
+}
+
+// ===== WAR =====
+function setWarMode(mode){
+  warMode=mode;
+  document.getElementById('mode-attack').style.opacity=mode==='attack'?'1':'0.5';
+  document.getElementById('mode-defense').style.opacity=mode==='defense'?'1':'0.5';
+}
+
+async function submitWar(){
+  if(!currentPlayerData.country_id) return showAlert('war-alert','error','ابتدا کشور انتخاب کنید');
+  const target=document.getElementById('war-target').value.trim();
+  const zone=document.getElementById('war-zone').value;
+  const troops=document.getElementById('war-troops').value;
+  const weapons=document.getElementById('war-weapons').value.trim();
+  const scenario=document.getElementById('war-scenario').value.trim();
+  const urgency=document.getElementById('war-urgency').value;
+  if(!target||!zone||!scenario) return showAlert('war-alert','error','لطفاً همه فیلدها را پر کنید');
+  showAlert('war-alert','info','در حال ارسال...');
+  const res = await sbPost('war_scenarios',{
+    player_code: currentPlayer,
+    mode: warMode,
+    attacker: currentPlayerData.country_name,
+    target, zone, troops, weapons, scenario, urgency, status:'pending'
+  });
+  if(res&&res.length>0){
+    showAlert('war-alert','success','✅ سناریو ارسال شد و در انتظار تأیید مدیر است');
+    showNotif('⚔️ سناریوی جنگی ارسال شد','error');
+  } else {
+    showAlert('war-alert','error','❌ خطا در ارسال');
+  }
+}
+
+// ===== ADMIN =====
+async function loadAdminData(){
+  // Players
+  const players = await sbGet('players','order=created_at.desc');
+  const tbody = document.getElementById('players-tbody');
+  tbody.innerHTML = players.map(p=>`
+    <tr>
+      <td><code style="color:var(--gl)">${p.code}</code></td>
+      <td>${p.country_flag||''} ${p.country_name||'<span style="color:var(--dim)">انتخاب نشده</span>'}</td>
+      <td style="font-size:11px;color:var(--dim)">${new Date(p.created_at).toLocaleDateString('fa-IR')}</td>
+      <td><button onclick="deletePlayer('${p.code}')" style="background:#440800;border:1px solid var(--red);color:var(--rl);padding:3px 8px;border-radius:3px;cursor:pointer;font-size:11px;font-family:Vazirmatn">حذف</button></td>
+    </tr>
+  `).join('');
+
+  // Declarations
+  const decls = await sbGet('declarations','order=created_at.desc');
+  document.getElementById('declarations-list').innerHTML = decls.length===0?'<div style="color:var(--dim);text-align:center">بیانیه‌ای ثبت نشده</div>':decls.map(d=>`
+    <div class="item-row">
+      <div class="item-meta">${d.country_flag||''} ${d.country_name||''} | ${d.leader||''} | ${new Date(d.created_at).toLocaleDateString('fa-IR')} <span class="badge badge-${d.status==='pending'?'pending':d.status==='approved'?'approved':'rejected'}">${d.status==='pending'?'در انتظار':d.status==='approved'?'تأیید شده':'رد شده'}</span></div>
+      <div class="item-title">📋 ${d.type||''}</div>
+      <div class="item-content">${d.content||''}</div>
+      ${d.status==='pending'?`<div style="display:flex;gap:6px;margin-top:8px">
+        <button onclick="updateDecl('${d.id}','approved')" style="background:rgba(45,80,22,.5);border:1px solid var(--gl);color:var(--gl);padding:4px 10px;border-radius:3px;cursor:pointer;font-family:Vazirmatn;font-size:12px">✅ تأیید</button>
+        <button onclick="updateDecl('${d.id}','rejected')" style="background:#440800;border:1px solid var(--red);color:var(--rl);padding:4px 10px;border-radius:3px;cursor:pointer;font-family:Vazirmatn;font-size:12px">❌ رد</button>
+      </div>`:''}
+    </div>
+  `).join('');
+
+  // Wars
+  const wars = await sbGet('war_scenarios','order=created_at.desc');
+  document.getElementById('wars-list').innerHTML = wars.length===0?'<div style="color:var(--dim);text-align:center">سناریویی ثبت نشده</div>':wars.map(w=>`
+    <div class="item-row">
+      <div class="item-meta">${w.mode==='attack'?'⚔️ حمله':'🛡️ دفاع'} | ${w.attacker||''} → ${w.target||''} | ${w.zone||''} | ${w.urgency||''} <span class="badge badge-${w.status==='pending'?'pending':w.status==='approved'?'approved':'rejected'}">${w.status==='pending'?'در انتظار':w.status==='approved'?'تأیید شده':'رد شده'}</span></div>
+      <div class="item-title">👥 نیرو: ${w.troops||'—'} | 🔫 ${w.weapons||'—'}</div>
+      <div class="item-content">${w.scenario||''}</div>
+      ${w.status==='pending'?`<div style="display:flex;gap:6px;margin-top:8px">
+        <button onclick="updateWar('${w.id}','approved')" style="background:rgba(45,80,22,.5);border:1px solid var(--gl);color:var(--gl);padding:4px 10px;border-radius:3px;cursor:pointer;font-family:Vazirmatn;font-size:12px">✅ تأیید</button>
+        <button onclick="updateWar('${w.id}','rejected')" style="background:#440800;border:1px solid var(--red);color:var(--rl);padding:4px 10px;border-radius:3px;cursor:pointer;font-family:Vazirmatn;font-size:12px">❌ رد</button>
+      </div>`:''}
+    </div>
+  `).join('');
+}
+
+async function addPlayer(){
+  const code = document.getElementById('new-player-code').value.trim();
+  if(!code) return showAlert('add-player-alert','error','کد را وارد کنید');
+  const res = await sbPost('players',{code});
+  if(res&&res.length>0){
+    showAlert('add-player-alert','success',`✅ بازیکن با کد "${code}" اضافه شد`);
+    document.getElementById('new-player-code').value='';
+    await loadAdminData();
+  } else {
+    showAlert('add-player-alert','error','❌ خطا - شاید این کد قبلاً استفاده شده');
+  }
+}
+
+async function deletePlayer(code){
+  if(!confirm(`آیا مطمئنید که میخواهید بازیکن "${code}" را حذف کنید؟`)) return;
+  await sbDelete('players',`code=eq.${encodeURIComponent(code)}`);
+  await loadAdminData();
+  showNotif('بازیکن حذف شد','error');
+}
+
+async function updateDecl(id, status){
+  await sbPatch('declarations',`id=eq.${id}`,{status});
+  await loadAdminData();
+  showNotif(status==='approved'?'✅ بیانیه تأیید شد':'❌ بیانیه رد شد', status==='approved'?'success':'error');
+}
+
+async function updateWar(id, status){
+  await sbPatch('war_scenarios',`id=eq.${id}`,{status});
+  await loadAdminData();
+  showNotif(status==='approved'?'✅ سناریو تأیید شد':'❌ سناریو رد شد', status==='approved'?'success':'error');
+}
+
+// ===== UI HELPERS =====
+function showPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+}
+
+function showTab(name){
+  document.querySelectorAll('.tab-content').forEach(t=>t.style.display='none');
+  document.querySelectorAll('#page-player .tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+name).style.display='block';
+  event.currentTarget.classList.add('active');
+}
+
+function showAdminTab(name){
+  document.querySelectorAll('[id^=admin-tab-]').forEach(t=>t.style.display='none');
+  document.querySelectorAll('#page-admin .tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('admin-tab-'+name).style.display='block';
+  event.currentTarget.classList.add('active');
+}
+
+function showAlert(id, type, msg){
+  const el=document.getElementById(id);
+  el.className=`alert alert-${type} show`;
+  el.textContent=msg;
+}
+
+function closeModal(id){ document.getElementById(id).classList.remove('show'); }
+
+function showNotif(msg, type){
+  const stack=document.getElementById('notifStack');
+  const n=document.createElement('div');
+  n.className=`notif notif-${type}`;
+  n.textContent=msg;
+  stack.appendChild(n);
+  setTimeout(()=>n.remove(),4000);
+}
+
+// ===== AUTO LOGIN =====
+async function autoLogin(){
+  const saved = localStorage.getItem('war_code');
+  if(!saved) return;
+  if(saved==='ADMIN'){ await loadAdminData(); showPage('admin'); return; }
+  const data = await sbGet('players',`code=eq.${encodeURIComponent(saved)}`);
+  if(data&&data.length>0){
+    currentPlayer=saved;
+    currentPlayerData=data[0];
+    await loadPlayerPage();
+    showPage('player');
+  }
+}
+
+autoLogin();
+</script>
+</body>
+</html>
